@@ -2627,11 +2627,11 @@
       <div class="rsvp-panel">
         <div class="rsvp-info">
           <p class="eyebrow">Upcoming session</p>
-          <p class="rsvp-event" id="eventTitleDisplay">Nivaant Sessions Presents - GROOVYARD </p>
+          <p class="rsvp-event" id="eventTitleDisplay">Nivaant Sessions Presents - Sunset Klub </p>
           <p class="rsvp-meta" style="font-size:15px; line-height:1.7; color:var(--grey); margin-bottom:32px;">
-            Date : 31st October 2026<br />
-            Time : 06:00 PM Onwards<br />
-            Location : Somewhere in Kalyan
+            Date : 6th December 2026<br />
+            Time : 04:30 PM Onwards<br />
+            Location : Clay, Dombivli<br />
           </p>
 
           <div class="capacity-status">
@@ -2641,15 +2641,15 @@
         </div>
 
         <div class="rsvp-action">
-          <p class="eyebrow">Join the waitlist</p>
+          <p class="eyebrow">Book your tickets</p>
           <p style="color:var(--grey); font-size:14px; margin-bottom:24px; max-width:34ch;">
-            You'll be taken directly to our official Google Form to complete your registration. Responses land straight
-            in our records.
+            Tickets for Sunset Klub are booked through Sort My Scene. You'll be taken to their page to complete your
+            booking.
           </p>
-          <a class="btn" id="mainRsvpBtn" href="https://forms.gle/oTHLM72NX2DZD84A9" target="_blank" rel="noopener">
+          <a class="btn" id="mainRsvpBtn" href="#rsvp">
             Join the Waitlist <span class="arrow">↗</span>
           </a>
-          <p class="rsvp-confirmation-note">Submission ≠ confirmation. Confirmed guests will receive invite details.</p>
+          <p class="rsvp-confirmation-note">Spaces are limited. Book early.</p>
         </div>
       </div>
 
@@ -2745,13 +2745,13 @@
       <button class="promo-close" id="promoClose" aria-label="Close popup">×</button>
       <div class="promo-live"><i></i> Upcoming Session</div>
       <p class="promo-presents">Nivaant Sessions presents</p>
-      <h2 class="promo-title" id="promoTitle">GROOVYARD</h2>
-      <p class="promo-session"></p>
+      <h2 class="promo-title" id="promoTitle">Sunset Klub</h2>
+    
 
       <div class="promo-meta">
-        <div><span>Date</span><b>31st October 2026</b></div>
-        <div><span>Time</span><b>06:00 PM Onwards</b></div>
-        <div><span>Location</span><b>Somewhere in Kalyan</b></div>
+        <div><span>Date</span><b>06th December 2026</b></div>
+        <div><span>Time</span><b>04:30 PM Onwards</b></div>
+        <div><span>Location</span><b>Clay, Dombivli</b></div>
       </div>
 
       <div class="promo-count" id="promoCount" aria-label="Time remaining until the event">
@@ -2762,18 +2762,18 @@
       </div>
 
       <div class="promo-actions">
-        <a class="btn" id="promoRsvpBtn" href="https://forms.gle/oTHLM72NX2DZD84A9" target="_blank" rel="noopener">Reserve Your Spot <span class="arrow">↗</span></a>
+        <a class="btn" id="promoRsvpBtn" href="#rsvp">Reserve Your Spot <span class="arrow">↗</span></a>
         <button class="btn btn-ghost" id="promoLater" type="button">Maybe later</button>
       </div>
     </div>
   </div>
 
   <!-- ================= UPCOMING SESSION ALERT PILL ================= -->
-  <button class="s-alert" id="sessionAlert" type="button" aria-label="Upcoming session: GROOVYARD, 31st October. View details">
+  <button class="s-alert" id="sessionAlert" type="button" aria-label="Upcoming session: Sunset Klub, 6th December. View details">
     <span class="s-alert-dot"></span>
     <span class="s-alert-text">
       <small>Upcoming session</small>
-      <span>GROOVYARD · 31 Oct — RSVP open</span>
+      <span>Sunset Klub · 6th December · 4:30 PM</span>
     </span>
     <span class="s-alert-arrow">↗</span>
   </button>
@@ -2800,12 +2800,30 @@
       }
 
       // ================= PRIMARY RSVP BUTTON =================
+      // Sunset Klub (6 Dec 2026) ticketing. Paste the Sort My Scene link below when you have it;
+      // leave it empty and both buttons show "Tickets Opening Soon" and do nothing.
+      var TICKET_URL = '';
       var mainRsvpBtn = document.getElementById('mainRsvpBtn');
-      if (mainRsvpBtn) {
-        mainRsvpBtn.addEventListener('click', function () {
-          showToast('Opening official Google Form ↗', 2500);
-        });
-      }
+      var promoRsvpBtnEl = document.getElementById('promoRsvpBtn');
+      var capacityTextEl = document.getElementById('capacityText');
+      [mainRsvpBtn, promoRsvpBtnEl].forEach(function (btn) {
+        if (!btn) return;
+        if (TICKET_URL) {
+          btn.href = TICKET_URL;
+          btn.target = '_blank';
+          btn.rel = 'noopener';
+          btn.innerHTML = (btn === mainRsvpBtn ? 'Book Tickets' : 'Reserve Your Spot') + ' <span class="arrow">↗</span>';
+          if (btn === mainRsvpBtn) btn.addEventListener('click', function () { showToast('Taking you to Sort My Scene ↗', 2500); });
+        } else {
+          btn.removeAttribute('href');
+          btn.removeAttribute('target');
+          btn.setAttribute('aria-disabled', 'true');
+          btn.style.opacity = '0.6';
+          btn.style.cursor = 'default';
+          btn.innerHTML = 'Tickets Opening Soon';
+        }
+      });
+      if (capacityTextEl) capacityTextEl.textContent = TICKET_URL ? 'TICKETS LIVE' : 'TICKETS OPENING SOON';
 
       // ================= LIVE COUNTDOWN TIMER =================
       var cdDays = document.getElementById('cdDays');
@@ -3027,11 +3045,11 @@
         if (!popup) return;
 
         // ---- Settings (edit these for the next event) ----
-        var EVENT_START = new Date('2026-10-31T18:00:00+05:30').getTime(); // 31 Oct 2026, 6 PM IST
-        var HIDE_AFTER = new Date('2026-11-01T00:00:00+05:30').getTime();  // popup stops appearing after the event day
+        var EVENT_START = new Date('2026-12-06T16:30:00+05:30').getTime(); // 6 Dec 2026, 4:30 PM IST
+        var HIDE_AFTER = new Date('2026-12-07T00:00:00+05:30').getTime();  // popup stops appearing after the event day
         var SHOW_ONCE_PER_TAB = false; // false = every page load, true = once per browser tab session
         var DELAY_MS = 1800;           // wait so the hero animation plays first
-        var STORAGE_KEY = 'nivaant_promo_groovyard_seen';
+        var STORAGE_KEY = 'nivaant_promo_sunsetklub_seen';
 
         if (Date.now() > HIDE_AFTER) return;
         if (SHOW_ONCE_PER_TAB) {
@@ -3110,8 +3128,8 @@
         if (!pill) return;
 
         // ---- Settings ----
-        var HIDE_AFTER = new Date('2026-11-01T00:00:00+05:30').getTime(); // stop alerting after event day
-        var ALERT_TEXT = '🔔 GROOVYARD · 31 Oct — RSVP now';
+        var HIDE_AFTER = new Date('2026-12-07T00:00:00+05:30').getTime(); // stop alerting after event day
+        var ALERT_TEXT = '🔔 SUNSET KLUB · 6 Dec · Clay, Dombivli';
         var FLASH_TAB_TITLE = true;   // alternates the browser tab title while the tab is in the background
         var FALLBACK_DELAY_MS = 6000; // pill shows this long after load if the popup hasn't opened
 
