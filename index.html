@@ -2646,8 +2646,8 @@
             Tickets for Sunset Klub are booked through Sort My Scene. You'll be taken to their page to complete your
             booking.
           </p>
-          <a class="btn" id="mainRsvpBtn" href="#rsvp">
-            Join the Waitlist <span class="arrow">↗</span>
+          <a class="btn" id="mainRsvpBtn" href="https://sortmyscene.com/event/sunsetm-klub-dec-06-2026" target="_blank" rel="noopener">
+            Get Tickets Now <span class="arrow">↗</span>
           </a>
           <p class="rsvp-confirmation-note">Spaces are limited. Book early.</p>
         </div>
@@ -2762,7 +2762,7 @@
       </div>
 
       <div class="promo-actions">
-        <a class="btn" id="promoRsvpBtn" href="#rsvp">Reserve Your Spot <span class="arrow">↗</span></a>
+        <a class="btn" id="promoRsvpBtn" href="https://sortmyscene.com/event/sunsetm-klub-dec-06-2026" target="_blank" rel="noopener">Get Tickets Now <span class="arrow">↗</span></a>
         <button class="btn btn-ghost" id="promoLater" type="button">Maybe later</button>
       </div>
     </div>
@@ -2800,9 +2800,9 @@
       }
 
       // ================= PRIMARY RSVP BUTTON =================
-      // Sunset Klub (6 Dec 2026) ticketing. Paste the Sort My Scene link below when you have it;
-      // leave it empty and both buttons show "Tickets Opening Soon" and do nothing.
-      var TICKET_URL = '';
+      // Sunset Klub (6 Dec 2026) ticketing link (Sort My Scene).
+      // If this is ever left empty, both buttons show "Tickets Opening Soon" and do nothing.
+      var TICKET_URL = 'https://sortmyscene.com/event/sunsetm-klub-dec-06-2026';
       var mainRsvpBtn = document.getElementById('mainRsvpBtn');
       var promoRsvpBtnEl = document.getElementById('promoRsvpBtn');
       var capacityTextEl = document.getElementById('capacityText');
@@ -2812,7 +2812,7 @@
           btn.href = TICKET_URL;
           btn.target = '_blank';
           btn.rel = 'noopener';
-          btn.innerHTML = (btn === mainRsvpBtn ? 'Book Tickets' : 'Reserve Your Spot') + ' <span class="arrow">↗</span>';
+          btn.innerHTML = 'Get Tickets Now' + ' <span class="arrow">↗</span>';
           if (btn === mainRsvpBtn) btn.addEventListener('click', function () { showToast('Taking you to Sort My Scene ↗', 2500); });
         } else {
           btn.removeAttribute('href');
@@ -3106,7 +3106,7 @@
         if (closeBtn) closeBtn.addEventListener('click', closePromo);
         if (backdrop) backdrop.addEventListener('click', closePromo);
         if (laterBtn) laterBtn.addEventListener('click', closePromo);
-        // "Reserve Your Spot" opens the RSVP Google Form in a new tab and closes the popup
+        // "Get Tickets Now" opens the RSVP Google Form in a new tab and closes the popup
         if (rsvpBtn) rsvpBtn.addEventListener('click', function () {
           closePromo();
         });
